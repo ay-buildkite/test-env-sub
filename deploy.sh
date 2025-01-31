@@ -52,8 +52,8 @@ for var in "${required_env_vars[@]}"; do
 done
 
 echo "Fetching metadata..."
-version=$(get_metadata "version")
-build_time=$(get_metadata "build_time")
+# version=$(get_metadata "version")
+# build_time=$(get_metadata "build_time")
 
 # Display configuration for logging and debugging purposes
 # WHY: This helps with troubleshooting and creates an audit trail
@@ -65,8 +65,8 @@ echo "Environment: $ENVIRONMENT"
 echo "Git Commit: $GIT_COMMIT"
 echo ""
 echo "Metadata Values:"
-echo "Build Version: $version"
-echo "Build Time: $build_time"
+echo "Build Version: $VERSION"
+echo "Build Time: $BUILD_TIME"
 
 # Simulate deployment
 echo "Starting deployment..."
