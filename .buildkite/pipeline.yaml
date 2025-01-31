@@ -17,8 +17,8 @@ steps:
       # We export these variables because they need to be available 
       # for the subsequent commands in this step (buildkite-agent meta-data)
       # Without export, they would only be available in the current shell
-      export BUILD_TIME=$$(date '+%Y-%m-%d-%H-%M-%S')
-      export GIT_VERSION=$$(git describe --tags --always)
+      BUILD_TIME=$$(date '+%Y-%m-%d-%H-%M-%S')
+      GIT_VERSION=$$(git describe --tags --always)
 
       # buildkite-agent meta-data runs as a separate process, so we needed those
       # environment variables to be exported for buildkite-agent to access them
