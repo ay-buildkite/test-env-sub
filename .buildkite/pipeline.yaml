@@ -39,7 +39,7 @@ steps:
       #    and $BUILD_TIME, but they don't exist yet
       #   2. These variables are only set at runtime after the commands above execute
       FULL_VERSION="$$GIT_VERSION-$$BUILD_TIME"
-      echo "Generated version: $$FULL_VERSION"
+      echo "Generated version: $FULL_VERSION"
 
   # Test step demonstrating local env vars
   - key: test-suite
