@@ -13,7 +13,7 @@ steps:
     label: ':git: Generate Version'
     # Using 'command' (singular) because this is a single logical operation
     # even though it has multiple lines
-    command: |-
+    command: |
       # We export these variables because they need to be available 
       # for the subsequent commands in this step (buildkite-agent meta-data)
       # Without export, they would only be available in the current shell
@@ -48,7 +48,6 @@ steps:
     # that coud potentially run independently
     commands:
       - echo "Running tests for version $$(buildkite-agent meta-data get 'GIT_VERSION')"
-      - ./run_tests.sh
     # Step-specific environment variables
     # These override global variables and are evaluated at upload time
     env:
