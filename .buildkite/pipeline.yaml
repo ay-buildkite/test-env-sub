@@ -3,7 +3,8 @@ env:
   # We define the base environment here so it can be overridden by CLI
   # or Buildkite UI settings
   BASE_ENVIRONMENT: staging
-  # Define a global timeout for all commands unless overridden
+  # Define a timeout for all commands unless overridden
+  DEFAULT_PIPELINE_TIMEOUT: '60'
 steps:
   # First step to generate our build information
   # We use 'key' to make this step uniquely identifiable for dependencies
