@@ -1,0 +1,40 @@
+---
+# Global vars for deployment
+env:
+  # Defined this variable in other pipeline.
+  # Because environment variables don't automatically flow between pipelines
+  # so it will always be '300'
+  DEPLOY_TIMEOUT: ${DEFAULT_PIPELINE_TIMEOUT:-300}
+steps:
+  - key: deploy-app
+    label: ':airplane: Deploy Application'
+    command: |
+      # Access variables passed from the trigger step
+      # DEPLOY_VERSION was passed via env, so we access it directly
+      echo "Deploying version: $DEPLOY_VERSION"
+
+      # Meta-data values need to be retrieved
+      # We export these because they'll be needed by the deploy script
+      export VERSION=$$(buildkite-agent meta-data get "version")
+      export BUILD_TIME=$$(buildkite-agent meta-data get "build_time")
+
+      # Run the deployment
+      ./deploy.sh
+  - key: health-check
+    label: ':stethoscope: Health Check'
+    # Using 'command' because this is one logical operation
+    command: |
+      # We don't export these variables because they're only used
+      # in this shell session
+      # Environment is also passed via trigger->build.env so it's 
+      # known at upload time.
+      DEPLOY_URL="https://${ENVIRONMENT}.example.com"
+      MAX_RETRIES=5
+
+      # We need to escape these variables because their value assignment
+      # happens at runtime. $ENVIRONMENT is defined at upload time, but
+      # its assignment to DEPLOY_URL as a concatenation ONLY happens at runtime.
+      # Same is true for MAX_RETRIES - it's assigned the value of 5 
+      # ONY at runtime.
+      ./health_check.sh "$$DEPLOY_URL" "$$MAX_RETRIES"
+    depends_on: deploy-app
