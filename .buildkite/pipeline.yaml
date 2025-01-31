@@ -73,7 +73,7 @@ steps:
       #   2. We want these commands to run when the trigger step executes
       #   3. Only then will our metadata values from earlier steps be available
       meta_data:
-        version: $$(buildkite-agent meta-data get 'GIT_VERSION')
-        build_time: $$(buildkite-agent meta-data get 'BUILD_TIME')
+        version: $(buildkite-agent meta-data get 'GIT_VERSION')
+        build_time: $(buildkite-agent meta-data get 'BUILD_TIME')
     # This ensures we don't trigger until tests pass
     depends_on: test-suite
