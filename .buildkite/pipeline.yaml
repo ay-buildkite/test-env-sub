@@ -17,8 +17,8 @@ steps:
       # We export these variables because they need to be available 
       # for the subsequent commands in this step (buildkite-agent meta-data)
       # Without export, they would only be available in the current shell
-      export BUILD_TIME=$$(date '+%Y-%m-%d-%H-%M-%S')
-      export GIT_VERSION=$$(git describe --tags --always)
+      export BUILD_TIME=$(date '+%Y-%m-%d-%H-%M-%S')
+      export GIT_VERSION=$(git describe --tags --always)
 
       # buildkite-agent meta-data runs as a separate process, so we needed those
       # environment variables to be exported for buildkite-agent to access them
@@ -27,8 +27,8 @@ steps:
       #   2. BUILD_TIME doesn't exist at upload time, 
       #      it replaces it with an empty string
       #   3. The pipeline gets saved with empty values baked in
-      buildkite-agent meta-data set "BUILD_TIME" "$$BUILD_TIME"
-      buildkite-agent meta-data set "GIT_VERSION" "$$GIT_VERSION"
+      buildkite-agent meta-data set "BUILD_TIME" "$BUILD_TIME"
+      buildkite-agent meta-data set "GIT_VERSION" "$GIT_VERSION"
 
       # We don't need to export FULL_VERSION because:
       #   1. We're only using it in an echo command in the same shell
@@ -38,8 +38,8 @@ steps:
       #   1. At pipeline upload time, Buildkite would try to interpolate $GIT_VERSION 
       #    and $BUILD_TIME, but they don't exist yet
       #   2. These variables are only set at runtime after the commands above execute
-      FULL_VERSION="$$GIT_VERSION-$$BUILD_TIME"
-      echo "Generated version: $$FULL_VERSION"
+      FULL_VERSION="$GIT_VERSION-$BUILD_TIME"
+      echo "Generated version: $FULL_VERSION"
 
   # Test step demonstrating local env vars
   - key: test-suite
