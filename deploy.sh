@@ -41,9 +41,9 @@ get_metadata() {
 # Define our required environment variables
 # Makes it clear what the script expect from its caller
 readonly required_env_vars=(
-  "deploy_version"
-  "environment"
-  "git_commit"
+  "DEPLOY_VERSION"
+  "ENVIRONMENT"
+  "GIT_COMMIT"
 )
 
 echo "Checking required env vars..."
