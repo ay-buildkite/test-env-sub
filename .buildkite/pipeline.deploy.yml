@@ -15,8 +15,8 @@ steps:
 
       # Meta-data values need to be retrieved
       # We export these because they'll be needed by the deploy script
-      VERSION=$$(buildkite-agent meta-data get "version")
-      BUILD_TIME=$$(buildkite-agent meta-data get "build_time")
+      export VERSION=$$(buildkite-agent meta-data get "version")
+      export BUILD_TIME=$$(buildkite-agent meta-data get "build_time")
       echo "VERSION after value assigned from meta-data: $$VERSION"
       echo "BUILD_TIME after value assigned from meta-data: $$BUILD_TIME"
 

@@ -5,7 +5,7 @@
 # -u: Error on undefined variables
 # -o pipefail: Return error if any command in a pipe fails
 # WHY: This helps us catch errors early and prevents silent failures
-set -eo pipefail
+set -euo pipefail
 
 # Check if required env vars exists
 check_env_var() {
