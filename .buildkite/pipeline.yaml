@@ -61,28 +61,20 @@ steps:
   - key: trigger-deploy
     label: :rocket Trigger deploy
     trigger: deploy-pipeline
-    # We use a block scalar (|) because this is JSON and preserving 
-    # newlines will make this more readable.
-    # For 'env':
-    #   1. These variables (BUILDKITE_BUILD_NUMBER, BASE_ENVIRONMENT, BUILDKITE_COMMIT) 
-    #       exist at pipeline upload time
-    #   2. We want their values to be "locked in" when the pipeline is uploaded
-    #   3. We want these exact values passed to our downstream pipeline
-    # For meta_data:
-    #   1. The command substitution $(...) needs to survive pipeline upload
-    #   2. We want these commands to run when the trigger step executes
-    #   3. Only then will our metadata values from earlier steps be available
-    build: |  # Using JSON works, but is a bit of a dick move. Y-U-NO consistent?
-      {
-        "env": {
-          "DEPLOY_VERSION": "${BUILDKITE_BUILD_NUMBER}",
-          "ENVIRONMENT": "${BASE_ENVIRONMENT}",
-          "GIT_COMMIT": "${BUILDKITE_COMMIT}"
-        },
-        "meta_data": {
-          "version": "$$(buildkite-agent meta-data get 'GIT_VERSION')",
-          "build_time": "$$(buildkite-agent meta-data get 'BUILD_TIME')"
-        }
-      }
+    build:
+      # 1. These variables (BUILDKITE_BUILD_NUMBER, BASE_ENVIRONMENT, BUILDKITE_COMMIT) 
+      #    exist at pipeline upload time
+      # 2. We want their values to be "locked in" when the pipeline is uploaded
+      # 3. We want these exact values passed to our downstream pipeline
+      env:
+        DEPLOY_VERSION: ${BUILDKITE_BUILD_NUMBER}
+        ENVIRONMENT: ${BASE_ENVIRONMENT}
+        GIT_COMMIT: ${BUILDKITE_COMMIT}
+      #   1. The command substitution $(...) needs to survive pipeline upload
+      #   2. We want these commands to run when the trigger step executes
+      #   3. Only then will our metadata values from earlier steps be available
+      meta_data:
+        version: $$(buildkite-agent meta-data get 'GIT_VERSION')
+        build_time: $$(buildkite-agent meta-data get 'BUILD_TIME')
     # This ensures we don't trigger until tests pass
     depends_on: test-suite
